@@ -1,0 +1,38 @@
+/**
+ * Брендбук СДС: акцент #FF5530, чёрный #020202, светло-серый фон #F9FAFB, шрифт Inter.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --ifm-color-primary: #ff5530;
+  --ifm-color-primary-dark: #e64d2b;
+  --ifm-color-primary-darker: #d94829;
+  --ifm-color-primary-darkest: #b33c22;
+  --ifm-color-primary-light: #ff6f49;
+  --ifm-color-primary-lighter: #ff7b5a;
+  --ifm-color-primary-lightest: #ffa28c;
+
+  --ifm-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ifm-color-black: #020202;
+  --ifm-background-color: #f9fafb;
+  --ifm-navbar-background-color: #ffffff;
+  --ifm-heading-color: #020202;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #ff6f49;
+  --ifm-color-primary-dark: #ff5530;
+  --ifm-color-primary-darker: #e64d2b;
+  --ifm-color-primary-darkest: #b33c22;
+  --ifm-color-primary-light: #ff7b5a;
+  --ifm-color-primary-lighter: #ff8f6d;
+  --ifm-color-primary-lightest: #ffa28c;
+
+  --ifm-background-color: #020202;
+  --ifm-navbar-background-color: #0d0d0d;
+  --ifm-heading-color: #f9fafb;
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.1);
+}
