@@ -1,0 +1,121 @@
+{
+  "egiszSidebar": [
+    "egisz/index",
+    {
+      "type": "category",
+      "label": "Об интеграции",
+      "link": {
+        "type": "doc",
+        "id": "egisz/overview/index"
+      },
+      "items": [
+        "egisz/overview/architecture",
+        "egisz/overview/remd-iemk",
+        "egisz/overview/connection-process",
+        "egisz/overview/terminology"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Подготовка",
+      "link": {
+        "type": "doc",
+        "id": "egisz/preparation/index"
+      },
+      "items": [
+        "egisz/preparation/organizational-requirements",
+        "egisz/preparation/technical-requirements",
+        "egisz/preparation/frmo-frmr",
+        "egisz/preparation/digital-signature"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Настройка",
+      "link": {
+        "type": "doc",
+        "id": "egisz/setup/index"
+      },
+      "items": [
+        "egisz/setup/organization",
+        "egisz/setup/departments",
+        "egisz/setup/employees",
+        "egisz/setup/integration-parameters",
+        "egisz/setup/nsi",
+        "egisz/setup/remd",
+        "egisz/setup/iemk",
+        "egisz/setup/replication",
+        "egisz/setup/branches"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "СЭМД",
+      "link": {
+        "type": "doc",
+        "id": "egisz/semd/index"
+      },
+      "items": [
+        "egisz/semd/connection"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Тестирование",
+      "link": {
+        "type": "doc",
+        "id": "egisz/testing/index"
+      },
+      "items": [
+        "egisz/testing/readiness",
+        "egisz/testing/test-transmission",
+        "egisz/testing/go-live"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Эксплуатация",
+      "link": {
+        "type": "doc",
+        "id": "egisz/operation/index"
+      },
+      "items": [
+        "egisz/operation/statuses",
+        "egisz/operation/resend",
+        "egisz/operation/patient-refusal",
+        "egisz/operation/data-maintenance",
+        "egisz/operation/faq"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Диагностика",
+      "link": {
+        "type": "doc",
+        "id": "egisz/troubleshooting/index"
+      },
+      "items": [
+        "egisz/troubleshooting/configuration-check",
+        "egisz/troubleshooting/error-catalog",
+        "egisz/troubleshooting/support-request"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Другие интеграции с гос. системами",
+      "link": {
+        "type": "doc",
+        "id": "egisz/other-integrations/index"
+      },
+      "items": [
+        "egisz/other-integrations/foms",
+        "egisz/other-integrations/netrika-spb",
+        "egisz/other-integrations/snils-enrichment"
+      ]
+    },
+    "egisz/normative-bases"
+  ],
+  "podderzhkaSidebar": [
+    "podderzhka/index"
+  ]
+}

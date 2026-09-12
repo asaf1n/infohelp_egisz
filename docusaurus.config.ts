@@ -27,7 +27,6 @@ const config: Config = {
   projectName: 'egisz-docs-stand',
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
   onBrokenAnchors: 'throw',
 
   i18n: {
@@ -38,6 +37,9 @@ const config: Config = {
   markdown: {
     mermaid: true,
     format: 'detect',
+    hooks: {
+      onBrokenMarkdownLinks: 'throw',
+    },
   },
 
   themes: [
@@ -65,6 +67,22 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           editUrl: localEditUrl,
           showLastUpdateTime: true,
+          lastVersion: '26.1',
+          versions: {
+            current: {
+              label: 'trunk',
+              path: 'trunk',
+              banner: 'unreleased',
+            },
+            '26.1': {
+              label: '26.1',
+              banner: 'none',
+            },
+            '25.2': {
+              label: '25.2',
+              banner: 'unmaintained',
+            },
+          },
         } satisfies Partial<PluginContentDocs.Options>,
         blog: false,
         theme: {
