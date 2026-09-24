@@ -1,0 +1,79 @@
+---
+id: iemk
+title: "Настройка ИЭМК"
+sidebar_label: "ИЭМК"
+description: "Формирование сведений ИЭМК, задачи репликации и проверка передачи."
+---
+
+# Настройка ИЭМК
+
+Назначение подсистемы описано в разделе [«РЭМД и ИЭМК»](../remd-iemk.mdx).
+
+## Подготовка базы данных
+
+На базе данных, в которой формируются сведения ИЭМК, создайте триггеры репликации журнала обмена `FIR_MC_ARC`:
+
+```sql
+execute procedure repl$create_triggers('fir_mc_arc', 'iud');
+```
+
+Для филиальной сети на центральной базе дополнительно создайте триггеры журнала изменений `FIR_MC_ARC`:
+
+```sql
+create or alter trigger REPL$FIR_MC_ARC_AI for FIR_MC_ARC
+active after insert position 0
+AS
+BEGIN
+  IF (EXISTS(SELECT * FROM REPL$GETACCESS WHERE REPL$ACCESS = 'REPL')) THEN
+  BEGIN
+    INSERT INTO REPL$CHANGELOG (TABLENAME, REPLID, REPLGRPID, OP, TOGRPID)
+    VALUES ('FIR_MC_ARC', NEW.REPL$ID, NEW.REPL$GRPID, 0, NEW.REPL$GRPID);
+  END
+END;
+
+create or alter trigger REPL$FIR_MC_ARC_AU for FIR_MC_ARC
+active after update position 0
+AS
+BEGIN
+  IF (EXISTS(SELECT * FROM REPL$GETACCESS WHERE REPL$ACCESS = 'REPL')) THEN
+  BEGIN
+    INSERT INTO REPL$CHANGELOG (TABLENAME, REPLID, REPLGRPID, OP, TOGRPID)
+    VALUES ('FIR_MC_ARC', NEW.REPL$ID, NEW.REPL$GRPID, 1, NEW.REPL$GRPID);
+  END
+END;
+
+create or alter trigger REPL$FIR_MC_ARC_AD for FIR_MC_ARC
+active after delete position 0
+AS
+BEGIN
+  IF (EXISTS(SELECT * FROM REPL$GETACCESS WHERE REPL$ACCESS = 'REPL')) THEN
+  BEGIN
+    INSERT INTO REPL$CHANGELOG (TABLENAME, REPLID, REPLGRPID, OP, TOGRPID)
+    VALUES ('FIR_MC_ARC', OLD.REPL$ID, OLD.REPL$GRPID, 2, OLD.REPL$GRPID);
+  END
+END;
+```
+
+Перед настройкой сверьте состав триггеров с эталонной конфигурацией используемой версии МИС.
+
+## Формирование сведений
+
+Сведения формируются в МИС на основании данных пациента, медицинской помощи и случая заболевания. Условия заполнения и доступ к учёту случаев заболевания описаны в разделе [«Параметры интеграции»](./integration-parameters.mdx). Отдельные виды СЭМД и их формирование настраиваются по [инструкции подключения СЭМД](../semd/connection.mdx).
+
+## Передача сведений
+
+Для обмена используются следующие задачи службы репликации:
+
+| Задача | Назначение |
+|---|---|
+| `iemk_out` | Передача сведений о пациенте и случае |
+| `iemk_in` | Приём ответов ИПС через callback на порт 9921 |
+| `iemk_handler` | Обработка ответов и обновление статусов |
+| `iemk_oper` | Репликация `FIR_MC_ARC` из филиалов в ЦБД |
+| `iemk_sprav` | Репликация `FIR_MC_ARC` из ЦБД в филиалы |
+
+Группа задач и назначение каждой задачи приведены в [перечне задач репликации](./replication.mdx). Расписание и зависимости задач сверьте с эталонной конфигурацией используемой версии МИС по разделу [«Проверка настроек»](../../services1/replic/configuration.mdx#проверка-настроек).
+
+## Проверка результата
+
+При [тестовой отправке СЭМД](../connection/test-integration.mdx) проверьте формирование сведений, передачу сообщения, ответ ИПС и изменение статуса в МИС. Результат передачи и текст ответа фиксируйте в журнале МИС. Порядок проверки описан в разделе [«Статусы обмена»](../operation/statuses.mdx#контроль-иэмк).

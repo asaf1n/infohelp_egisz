@@ -1,0 +1,879 @@
+{
+  "identity": [
+    {
+      "DB_PATH": "I:\\DB\\box_med.fdb",
+      "ENGINE": "5.0.3",
+      "DB_USER": "SYSDBA"
+    }
+  ],
+  "columns": [
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "FIELD_NAME": "SYNCPROFID",
+      "DOMAIN_NAME": "TBIGIDENT",
+      "REQUIRED": 1,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "FIELD_NAME": "PARENT_SYNCPROFID",
+      "DOMAIN_NAME": "TBIGCODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "FIELD_NAME": "SYNCPROFNAME",
+      "DOMAIN_NAME": "TTEXT200",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "FIELD_NAME": "SYNCPROF_SP",
+      "DOMAIN_NAME": "TTEXT100",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "FIELD_NAME": "SYNCPROFIDENT",
+      "DOMAIN_NAME": "TTEXT64",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "FIELD_NAME": "COMMENT",
+      "DOMAIN_NAME": "TTEXT1024",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "FIELD_NAME": "FDATE",
+      "DOMAIN_NAME": "TDATEONLY",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "FIELD_NAME": "FILIAL",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "FIELD_NAME": "UID",
+      "DOMAIN_NAME": "TBIGCODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "FIELD_NAME": "MODIFYDATE",
+      "DOMAIN_NAME": "TDATE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "FIELD_NAME": "REPL$ID",
+      "DOMAIN_NAME": "REPL$BIGIDENT",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "FIELD_NAME": "REPL$GRPID",
+      "DOMAIN_NAME": "REPL$IDENT",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE_LINKS",
+      "FIELD_NAME": "SYNCPROFLINKID",
+      "DOMAIN_NAME": "TBIGIDENT",
+      "REQUIRED": 1,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE_LINKS",
+      "FIELD_NAME": "SYNCPROFID",
+      "DOMAIN_NAME": "TBIGIDENT",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE_LINKS",
+      "FIELD_NAME": "SYNCREFID",
+      "DOMAIN_NAME": "TBIGIDENT",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE_LINKS",
+      "FIELD_NAME": "FILIAL",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE_LINKS",
+      "FIELD_NAME": "UID",
+      "DOMAIN_NAME": "TBIGCODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE_LINKS",
+      "FIELD_NAME": "MODIFYDATE",
+      "DOMAIN_NAME": "TDATE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE_LINKS",
+      "FIELD_NAME": "REPL$ID",
+      "DOMAIN_NAME": "REPL$BIGIDENT",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE_LINKS",
+      "FIELD_NAME": "REPL$GRPID",
+      "DOMAIN_NAME": "REPL$IDENT",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "SYNCREFID",
+      "DOMAIN_NAME": "TBIGIDENT",
+      "REQUIRED": 1,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REFNAME",
+      "DOMAIN_NAME": "TTEXT255",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REFCODE",
+      "DOMAIN_NAME": "TTEXT128",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REFTABLE",
+      "DOMAIN_NAME": "TTEXT64",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REFHANDLER",
+      "DOMAIN_NAME": "TTEXT64",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "SYNCVERID",
+      "DOMAIN_NAME": "TBIGCODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REFCOMMENT",
+      "DOMAIN_NAME": "TTEXT1024",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REFTYPE",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "DICREFID",
+      "DOMAIN_NAME": "TBIGCODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "GROUPTYPE",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "PARENTREFID",
+      "DOMAIN_NAME": "TBIGCODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REFFULLNAME",
+      "DOMAIN_NAME": "TTEXT512",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REFTEMPLATE",
+      "DOMAIN_NAME": "TBLOB",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REFMASK",
+      "DOMAIN_NAME": "TTEXT255",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REFENCODING",
+      "DOMAIN_NAME": "TTEXT64",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "TID",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "DISABLED",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REPL$ID",
+      "DOMAIN_NAME": "REPL$IDENT",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REPL$GRPID",
+      "DOMAIN_NAME": "REPL$IDENT",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REFFOLDER",
+      "DOMAIN_NAME": "TTEXT255",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "AUTHMODE",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "LOGIN",
+      "DOMAIN_NAME": "TTEXT256",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "PWORD",
+      "DOMAIN_NAME": "TTEXT256",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "SORTORDER",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "SAMESYNCVERID",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REFPATHTYPE",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": "DEFAULT 0",
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REPID",
+      "DOMAIN_NAME": "TBIGCODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "FIELDSTEMPLATE",
+      "DOMAIN_NAME": "TBLOB",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "FIELDSDELIM",
+      "DOMAIN_NAME": "TTEXT16",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "SAXTAGNAME",
+      "DOMAIN_NAME": "TTEXT255",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "SAXPACKCOUNT",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "STARTROW",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "REFCODEPREFIX",
+      "DOMAIN_NAME": "TTEXT64",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "CONVERTSPECSYMB",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "DONEFILEMOVEMODE",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "MULTIFILES",
+      "DOMAIN_NAME": "TICODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "TAGFORDETAILS",
+      "DOMAIN_NAME": "TTEXT255",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "BEGINTAG",
+      "DOMAIN_NAME": "TTEXT1024",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "PID",
+      "DOMAIN_NAME": "TBIGCODE",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    },
+    {
+      "RELATION_NAME": "SYNC_REFERENCE",
+      "FIELD_NAME": "FREEREPLACETEXT",
+      "DOMAIN_NAME": "TTEXT1024",
+      "REQUIRED": null,
+      "COLUMN_DEFAULT": null,
+      "DOMAIN_DEFAULT": null
+    }
+  ],
+  "profiles": [
+    {
+      "SYNCPROFID": 10000001,
+      "PARENT_SYNCPROFID": 0,
+      "SYNCPROFNAME": "СЭМД 227",
+      "SYNCPROF_SP": null,
+      "SYNCPROFIDENT": null,
+      "COMMENT": null,
+      "FDATE": null,
+      "FILIAL": 1,
+      "UID": 10000001,
+      "MODIFYDATE": "2026-09-12 12:15:04.805000",
+      "REPL$ID": 1,
+      "REPL$GRPID": 1
+    }
+  ],
+  "links": [
+    {
+      "SYNCPROFLINKID": 10000001,
+      "SYNCPROFID": 10000001,
+      "SYNCREFID": 55,
+      "FILIAL": 1,
+      "UID": 10000001,
+      "MODIFYDATE": "2026-09-12 12:15:04.797000",
+      "REPL$ID": 1,
+      "REPL$GRPID": 1
+    }
+  ],
+  "procedures": [
+    {
+      "TRIM": "SYNC_PROFILE_GET_DEFAULT",
+      "RDB$PROCEDURE_SOURCE": "begin\r\n  error_code = 0;\r\n  error_text = '';\r\n  check_code = 0;\r\n  check_text = '';\r\n\r\n  if ((recid is null) and (rectype is null)) then\r\n    for with protocol_list as\r\n      (\r\n        select distinct protocolid\r\n        from treatplacesigndet tsd\r\n        left join treatplacesign ts on ts.tpsignid = tsd.tpsignid\r\n        left join dicinfo d on d.dicid = tsd.recid and refid = -508 and d.rekvint1 in (2,5,7,14)\r\n        where tsd.rectype = 97\r\n        and tsd.modifydate > current_date - 30\r\n        and ts.tpsignid > 0 and d.dicid > 0\r\n      )\r\n      , placeid_list as\r\n      (\r\n        select distinct placeid\r\n        from protocol_list p\r\n        left join treatplace tp on tp.protocolid = p.protocolid\r\n      )\r\n      , refid_list as\r\n      (\r\n        select distinct gp.reftodict refid\r\n        from placeid_list p\r\n        left join workplacedoclinks wpl on p.placeid = wpl.placeid\r\n        left join groupsdictlinks gdl on wpl.groupid = gdl.groupid\r\n        left join groupsparams gp on gdl.codeparams = gp.codeparams\r\n        where reftodict is not null\r\n      )\r\n\r\n      select distinct syncrefid\r\n        from refid_list rl\r\n        left join refdic r on rl.refid = r.refid\r\n        left join sync_reference sr on ((r.refid = sr.dicrefid) or (r.refcode = sr.refcode))\r\n        where r.refid is not null and sr.syncrefid > 0\r\n      into :SYNCREFID do suspend;\r\n  else if ((coalesce(:recid, 0) > 0) and (:rectype = 97)) then\r\n    for with placeid_list as\r\n      (\r\n        select distinct wd.placeid\r\n        from workplacedocdet wpd\r\n        left join workplacedoc wd on wpd.placeid = wd.placeid\r\n        where wpd.rectype = 97 and (wpd.recid = cast(:recid as tbigcode) or cast(:recid as tbigcode) is null)\r\n      )\r\n      , refid_list as\r\n      (\r\n        select distinct gp.reftodict refid\r\n        from placeid_list p\r\n        left join workplacedoclinks wpl on p.placeid = wpl.placeid\r\n        left join groupsdictlinks gdl on wpl.groupid = gdl.groupid\r\n        left join groupsparams gp on gdl.codeparams = gp.codeparams\r\n        where reftodict is not null\r\n      )\r\n\r\n      select distinct syncrefid\r\n        from refid_list rl\r\n        left join refdic r on rl.refid = r.refid\r\n        left join sync_reference sr on ((r.refid = sr.dicrefid) or (r.refcode = sr.refcode))\r\n      where r.refid is not null and sr.syncrefid > 0\r\n    into :SYNCREFID do suspend;\r\nend"
+    }
+  ],
+  "profile_triggers": [
+    {
+      "TRIGGER_NAME": "REPL$SYNC_PROFILE_BI",
+      "RELATION_NAME": "SYNC_PROFILE",
+      "RDB$TRIGGER_TYPE": 1,
+      "RDB$TRIGGER_SEQUENCE": 0,
+      "RDB$TRIGGER_INACTIVE": 0,
+      "RDB$TRIGGER_SOURCE": "AS\r\nBEGIN\r\n  IF (EXISTS(SELECT * FROM REPL$GETACCESS WHERE REPL$ACCESS = 'REPL')) THEN\r\n  BEGIN\r\n    IF (NEW.REPL$ID IS NULL) THEN\r\n      NEW.REPL$ID = GEN_ID(REPL$SYNC_PROFILE_GEN,1);\r\n  \r\n    IF (NEW.REPL$GRPID IS NULL) THEN\r\n      SELECT REPL$GRPID FROM REPL$GETGRPID INTO NEW.REPL$GRPID;\r\n  END\r\nEND"
+    },
+    {
+      "TRIGGER_NAME": "REPL$SYNC_PROFILE_LINKS_BI",
+      "RELATION_NAME": "SYNC_PROFILE_LINKS",
+      "RDB$TRIGGER_TYPE": 1,
+      "RDB$TRIGGER_SEQUENCE": 0,
+      "RDB$TRIGGER_INACTIVE": 0,
+      "RDB$TRIGGER_SOURCE": "AS\r\nBEGIN\r\n  IF (EXISTS(SELECT * FROM REPL$GETACCESS WHERE REPL$ACCESS = 'REPL')) THEN\r\n  BEGIN\r\n    IF (NEW.REPL$ID IS NULL) THEN\r\n      NEW.REPL$ID = GEN_ID(REPL$SYNC_PROFILE_LINKS_GEN,1);\r\n  \r\n    IF (NEW.REPL$GRPID IS NULL) THEN\r\n      SELECT REPL$GRPID FROM REPL$GETGRPID INTO NEW.REPL$GRPID;\r\n  END\r\nEND"
+    }
+  ],
+  "profile_indices": [
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "INDEX_NAME": "PK_SYNC_PROFILE",
+      "IS_UNIQUE": 1,
+      "FIELD_NAME": "SYNCPROFID"
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "INDEX_NAME": "REPL$SYNC_PROFILE_IDX",
+      "IS_UNIQUE": 1,
+      "FIELD_NAME": "REPL$ID"
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE",
+      "INDEX_NAME": "REPL$SYNC_PROFILE_IDX",
+      "IS_UNIQUE": 1,
+      "FIELD_NAME": "REPL$GRPID"
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE_LINKS",
+      "INDEX_NAME": "PK_SYNC_PROFILE_LINKS",
+      "IS_UNIQUE": 1,
+      "FIELD_NAME": "SYNCPROFLINKID"
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE_LINKS",
+      "INDEX_NAME": "REPL$SYNC_PROFILE_LINKS_IDX",
+      "IS_UNIQUE": 1,
+      "FIELD_NAME": "REPL$ID"
+    },
+    {
+      "RELATION_NAME": "SYNC_PROFILE_LINKS",
+      "INDEX_NAME": "REPL$SYNC_PROFILE_LINKS_IDX",
+      "IS_UNIQUE": 1,
+      "FIELD_NAME": "REPL$GRPID"
+    }
+  ],
+  "generators": [
+    {
+      "GENERATOR_NAME": "PR_ASIDENT_GEN"
+    },
+    {
+      "GENERATOR_NAME": "PR_AWIDENT_GEN"
+    },
+    {
+      "GENERATOR_NAME": "PR_ORDERIDENT_GEN"
+    },
+    {
+      "GENERATOR_NAME": "ACCIDENTGEN"
+    },
+    {
+      "GENERATOR_NAME": "SYNC_REFVERSIONS_GEN"
+    },
+    {
+      "GENERATOR_NAME": "SYNC_REFERENCE_GEN"
+    },
+    {
+      "GENERATOR_NAME": "SYNC_RECID_GEN"
+    },
+    {
+      "GENERATOR_NAME": "ACCIDENTDETNUM_GEN"
+    },
+    {
+      "GENERATOR_NAME": "REPL$ACCIDENT_GEN"
+    },
+    {
+      "GENERATOR_NAME": "REPL$ACCIDENTDET_GEN"
+    },
+    {
+      "GENERATOR_NAME": "REPL$ACCIDENTDETNUM_GEN"
+    },
+    {
+      "GENERATOR_NAME": "REPL$RLS_IDENT_WIND_STR_GEN"
+    },
+    {
+      "GENERATOR_NAME": "REPL$SYNC_REFERENCE_GEN"
+    },
+    {
+      "GENERATOR_NAME": "REPL$SYNC_REFFIELDS_GEN"
+    },
+    {
+      "GENERATOR_NAME": "REPL$SYNC_REFVERSIONS_GEN"
+    },
+    {
+      "GENERATOR_NAME": "ACCIDENTDETNUMRES_GEN"
+    },
+    {
+      "GENERATOR_NAME": "REPL$ACCIDENTDETMEK_GEN"
+    },
+    {
+      "GENERATOR_NAME": "REPL$ACCIDENTDETMEKRES_GEN"
+    },
+    {
+      "GENERATOR_NAME": "ACCIDENTDETMEKRES_GEN"
+    },
+    {
+      "GENERATOR_NAME": "ACCIDENTDETMEK_GEN"
+    },
+    {
+      "GENERATOR_NAME": "SYNC_FIAS_VERSIONS_GEN"
+    },
+    {
+      "GENERATOR_NAME": "SYNCLOG_GEN"
+    },
+    {
+      "GENERATOR_NAME": "SYNC_PROFILE_GEN"
+    },
+    {
+      "GENERATOR_NAME": "REPL$SYNC_PROFILE_GEN"
+    },
+    {
+      "GENERATOR_NAME": "SYNC_PROFILE_LINKS_GEN"
+    },
+    {
+      "GENERATOR_NAME": "REPL$SYNC_PROFILE_LINKS_GEN"
+    }
+  ],
+  "procedure_names": [
+    {
+      "PROCEDURE_NAME": "TI_QR_IDENTIFICATION"
+    },
+    {
+      "PROCEDURE_NAME": "MR_ACCIDENT_LIST"
+    },
+    {
+      "PROCEDURE_NAME": "MR_ACCIDENT_TOTAL"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_ROLLBACK"
+    },
+    {
+      "PROCEDURE_NAME": "TI_CHECK_IDENTIFICATION"
+    },
+    {
+      "PROCEDURE_NAME": "DOCTSHED_GETIDENT"
+    },
+    {
+      "PROCEDURE_NAME": "OMS_ACCIDENTDET_FORM"
+    },
+    {
+      "PROCEDURE_NAME": "FIR_MC_GET_CLIENT_IDENTS"
+    },
+    {
+      "PROCEDURE_NAME": "CF_ACCIDENT_SELECT"
+    },
+    {
+      "PROCEDURE_NAME": "CF_ACCIDENT_UPDATE"
+    },
+    {
+      "PROCEDURE_NAME": "CF_ACCIDENT_CHECK"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_OBJECT_INFO"
+    },
+    {
+      "PROCEDURE_NAME": "CF_ACCIDENT_SEARCH"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_EXACT"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_COMMIT"
+    },
+    {
+      "PROCEDURE_NAME": "CF_ACCIDENT_POST"
+    },
+    {
+      "PROCEDURE_NAME": "I25_CHANGE_ACCIDENT"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_REFRESH"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_CAN_CANCEL_FINALDG"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_CHK_CHANGE_RIGHTS"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_ALLOW_ROLLBACK"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_CLOSE"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_NEW"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_ADD_PREDIAG"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_ENABLE_NEW"
+    },
+    {
+      "PROCEDURE_NAME": "CF_ACCIDENT_ACTION_ENABLE"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_CHANGE_BY_SMP"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_CLOSE_ATTRIBUTES"
+    },
+    {
+      "PROCEDURE_NAME": "CF_ACCIDENT_INFO"
+    },
+    {
+      "PROCEDURE_NAME": "NEED_CHECK_ACCIDENT_PROFILE"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_GET_TYPEOFCREATE"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_STAT_ATTRIBUTES"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_GET_HISTID"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_POST_EVENT_PREFIX"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_ENABLE_EXT_TRAVM"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_INHERIT_TRAVM_DG"
+    },
+    {
+      "PROCEDURE_NAME": "FIR_SPB_PATIENT_IDENT"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_STAT_DIAGS"
+    },
+    {
+      "PROCEDURE_NAME": "CF_ACCIDENT_AUTOCLOSE"
+    },
+    {
+      "PROCEDURE_NAME": "FIR_SPB2_PATIENT_IDENT"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_GET_SOPUT_DIAGS"
+    },
+    {
+      "PROCEDURE_NAME": "FIR_FFOMS_IDENT_REQUEST"
+    },
+    {
+      "PROCEDURE_NAME": "FIR_FFOMS_IDENT_RESPONSE"
+    },
+    {
+      "PROCEDURE_NAME": "CF_FIR_FFOMS_IDENT_REQUEST"
+    },
+    {
+      "PROCEDURE_NAME": "CF_FIR_FFOMS_IDENT_RESPONSE"
+    },
+    {
+      "PROCEDURE_NAME": "CF_ACCIDENT_SEARCH_VIEW"
+    },
+    {
+      "PROCEDURE_NAME": "FIR_EMD_SETIDENTITY"
+    },
+    {
+      "PROCEDURE_NAME": "OMS63_CHECK_OMS_ACCIDENTS"
+    },
+    {
+      "PROCEDURE_NAME": "FIR_FFOMS_IDENT_HANDLER"
+    },
+    {
+      "PROCEDURE_NAME": "FIR_FFOMS_IDENT_WRAPPER_DECODE"
+    },
+    {
+      "PROCEDURE_NAME": "FIR_FFOMS_IDENT_WRAPPER_ENCODE"
+    },
+    {
+      "PROCEDURE_NAME": "I25_ACCIDENT_INHERIT_DIAGN"
+    },
+    {
+      "PROCEDURE_NAME": "GET_RANDOM_ACCIDENTLIST"
+    }
+  ],
+  "procedure_parameters": [
+    {
+      "PARAMETER_NAME": "RECID",
+      "PARAMETER_TYPE": 0,
+      "DOMAIN_NAME": "TBIGCODE",
+      "DEFAULT_SOURCE": "= null"
+    },
+    {
+      "PARAMETER_NAME": "RECTYPE",
+      "PARAMETER_TYPE": 0,
+      "DOMAIN_NAME": "TIDENT",
+      "DEFAULT_SOURCE": "= null"
+    },
+    {
+      "PARAMETER_NAME": "ERROR_CODE",
+      "PARAMETER_TYPE": 1,
+      "DOMAIN_NAME": "TICODE",
+      "DEFAULT_SOURCE": null
+    },
+    {
+      "PARAMETER_NAME": "ERROR_TEXT",
+      "PARAMETER_TYPE": 1,
+      "DOMAIN_NAME": "TTEXT1024",
+      "DEFAULT_SOURCE": null
+    },
+    {
+      "PARAMETER_NAME": "CHECK_CODE",
+      "PARAMETER_TYPE": 1,
+      "DOMAIN_NAME": "TICODE",
+      "DEFAULT_SOURCE": null
+    },
+    {
+      "PARAMETER_NAME": "CHECK_TEXT",
+      "PARAMETER_TYPE": 1,
+      "DOMAIN_NAME": "TTEXT1024",
+      "DEFAULT_SOURCE": null
+    },
+    {
+      "PARAMETER_NAME": "SYNCREFID",
+      "PARAMETER_TYPE": 1,
+      "DOMAIN_NAME": "TBIGCODE",
+      "DEFAULT_SOURCE": null
+    }
+  ],
+  "ref_columns": [
+    {
+      "SYNCREFID": 55,
+      "REFNAME": "МКБ-10",
+      "REFCODE": "1.2.643.5.1.13.13.11.1005",
+      "REFTABLE": "NSI_MRB358",
+      "REFHANDLER": "NSI_SYNC_MRB358",
+      "SYNCVERID": 10000088,
+      "REFTYPE": 1,
+      "GROUPTYPE": 0,
+      "DISABLED": null
+    }
+  ]
+}

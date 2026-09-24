@@ -1,0 +1,99 @@
+{
+  "checked_on": "2026-09-12",
+  "online_revision_verified": false,
+  "live_registry_test_performed": false,
+  "files": [
+    {
+      "path": "I:\\ЕГИСЗ\\Документация МЗ ЕГИСЗ\\Руководство по интеграции с ИЭМК.docx",
+      "size": 508748,
+      "sha256": "d4543b04a6e92b5002d3c84692adf6ce33d294026d68da2d429123ac68bcc546"
+    },
+    {
+      "path": "I:\\ЕГИСЗ\\Документация МЗ ЕГИСЗ\\Регламент описывающий ФЛК в РЭМД.docx",
+      "size": 508108,
+      "sha256": "8c22d42ef480c74f86627463b26b759512222c003ad65d0077db732ad88f3e9d"
+    },
+    {
+      "path": "I:\\ЕГИСЗ\\CDA_ПРОТОКОЛ_КОНСУЛЬТАЦИИ_Р5.pdf",
+      "size": 3309840,
+      "sha256": "c08cee5012cd40817d718d135cbcf9c3c4084aa4c7970e6d8577e24e06d4b6bc"
+    },
+    {
+      "path": "I:\\ЕГИСЗ\\Пояснения (разъяснения) к Руководству по реализации СЭМД.docx",
+      "size": 44257,
+      "sha256": "ab80591feca7c5a8360a0622db0dc52326a893d0e6ab641d322fac3ce6b4995b"
+    },
+    {
+      "path": "I:\\ЕГИСЗ\\1.2.643.5.1.13.13.11.1520_12.95_json.zip",
+      "size": 17113,
+      "sha256": "8047057fd5d522d4c674fdad53e78a82fb0470788787a8694fcc784f92c0bb3a"
+    },
+    {
+      "path": "I:\\ЕГИСЗ\\Документация МЗ ЕГИСЗ\\Регламент по подключению иных информационных систем к ЕГИСЗ.docx",
+      "size": 50903,
+      "sha256": "6f2d4f460ad020b1291ec99851a9228b96d28feacc44d592846b6bd50eabab02"
+    }
+  ],
+  "nsi_records": [
+    {
+      "ID": 227,
+      "OID": "227",
+      "TYPE": "5",
+      "NAME": "Протокол консультации (CDA) Редакция 5",
+      "LEVEL": "3",
+      "PATIENT_INFO": "Обязательны с указанием СНИЛС",
+      "SHELF_LIFE": "25 лет",
+      "STORAGE_TYPE": "Хранится в МО",
+      "EXTENDED_LIFE": "Да",
+      "UNLIMITED_LIFE": "Да",
+      "MO_SIGN": "Да",
+      "FORMAT": "2",
+      "START_DATE": "07.03.2024",
+      "IMPLEMENTATION_GUIDE": "https://portal.egisz.rosminzdrav.ru/materials/4557",
+      "GIT_LINK": "1.2.643.5.1.13.13.15.13.5",
+      "SHOW_PATIENT": "Да",
+      "IS_ONLINE": "Нет",
+      "SERIES_REQUIRED": "Нет"
+    },
+    {
+      "ID": 235,
+      "OID": "235",
+      "TYPE": "1",
+      "NAME": "Эпикриз в стационаре выписной (CDA) Редакция 6",
+      "LEVEL": "3",
+      "PATIENT_INFO": "Обязательны с указанием СНИЛС",
+      "SHELF_LIFE": "25 лет",
+      "STORAGE_TYPE": "Хранится в МО",
+      "EXTENDED_LIFE": "Да",
+      "UNLIMITED_LIFE": "Да",
+      "MO_SIGN": "Да",
+      "FORMAT": "2",
+      "START_DATE": "29.03.2024",
+      "IMPLEMENTATION_GUIDE": "https://portal.egisz.rosminzdrav.ru/materials/4585",
+      "GIT_LINK": "1.2.643.5.1.13.13.15.25.6",
+      "SHOW_PATIENT": "Да",
+      "IS_ONLINE": "Нет",
+      "SERIES_REQUIRED": "Нет"
+    },
+    {
+      "ID": 233,
+      "OID": "233",
+      "TYPE": "2",
+      "NAME": "Эпикриз по законченному случаю амбулаторный (CDA) Редакция 5",
+      "LEVEL": "3",
+      "PATIENT_INFO": "Обязательны с указанием СНИЛС",
+      "SHELF_LIFE": "25 лет",
+      "STORAGE_TYPE": "Хранится в МО",
+      "EXTENDED_LIFE": "Да",
+      "UNLIMITED_LIFE": "Да",
+      "MO_SIGN": "Да",
+      "FORMAT": "2",
+      "START_DATE": "29.03.2024",
+      "IMPLEMENTATION_GUIDE": "https://portal.egisz.rosminzdrav.ru/materials/4581",
+      "GIT_LINK": "1.2.643.5.1.13.13.15.26.5",
+      "SHOW_PATIENT": "Да",
+      "IS_ONLINE": "Нет",
+      "SERIES_REQUIRED": "Нет"
+    }
+  ]
+}

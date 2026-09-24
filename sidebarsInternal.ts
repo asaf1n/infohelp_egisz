@@ -9,7 +9,6 @@ const sidebarsInternal: SidebarsConfig = {
     'egisz/precheck',
     'egisz/deep-diagnostics',
     'egisz/database',
-    'egisz/replicator',
     'egisz/corporate-resources',
     'egisz/escalation-to-development',
     'egisz/knowledge-loop',

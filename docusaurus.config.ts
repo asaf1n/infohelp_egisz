@@ -1,26 +1,18 @@
-import path from 'path';
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import type * as PluginContentDocs from '@docusaurus/plugin-content-docs';
-import type * as PluginClientRedirects from '@docusaurus/plugin-client-redirects';
 import type * as ThemeSearchLocal from '@easyops-cn/docusaurus-search-local';
 
-// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
-
-const localEditUrl = ({docPath}: {docPath: string}) =>
-  `file:///${path.resolve(process.cwd(), 'docs', docPath).replace(/\\/g, '/')}`;
-
 const config: Config = {
-  title: 'Справка МИС «Инфоклиника» — стенд ЕГИСЗ',
-  tagline: 'Локальный стенд подготовки документации раздела «Интеграция с ЕГИСЗ»',
-  favicon: 'img/favicon.ico',
+  title: 'Справка МИС «Инфоклиника»',
+  tagline: 'Подключение к ЕГИСЗ, настройка служебных модулей и сопровождение обмена',
 
   future: {
     v4: true,
   },
 
-  url: 'http://192.168.26.202:3006',
+  url: 'http://localhost:3006',
   baseUrl: '/',
 
   organizationName: 'sds',
@@ -48,7 +40,7 @@ const config: Config = {
       '@easyops-cn/docusaurus-search-local',
       {
         hashed: true,
-        language: ['ru'],
+        language: ['ru', 'en'],
         indexDocs: true,
         indexBlog: false,
         indexPages: false,
@@ -65,22 +57,20 @@ const config: Config = {
           path: 'docs',
           routeBasePath: '/',
           sidebarPath: './sidebars.ts',
-          editUrl: localEditUrl,
-          showLastUpdateTime: true,
           lastVersion: '26.1',
           versions: {
             current: {
-              label: 'trunk',
+              label: 'trunk — тестовый стенд',
               path: 'trunk',
-              banner: 'unreleased',
+              banner: 'none',
             },
             '26.1': {
-              label: '26.1',
+              label: '26.1 — снимок стенда',
               banner: 'none',
             },
             '25.2': {
-              label: '25.2',
-              banner: 'unmaintained',
+              label: '25.2 — макет',
+              banner: 'none',
             },
           },
         } satisfies Partial<PluginContentDocs.Options>,
@@ -100,36 +90,31 @@ const config: Config = {
         path: 'internal',
         routeBasePath: 'internal',
         sidebarPath: './sidebarsInternal.ts',
-        editUrl: ({docPath}: {docPath: string}) =>
-          `file:///${path.resolve(process.cwd(), 'internal', docPath).replace(/\\/g, '/')}`,
-        showLastUpdateTime: true,
       } satisfies Partial<PluginContentDocs.Options>,
-    ],
-    [
-      '@docusaurus/plugin-client-redirects',
-      {
-        redirects: [],
-      } satisfies PluginClientRedirects.Options,
     ],
   ],
 
   themeConfig: {
-    image: 'img/docusaurus-social-card.jpg',
+    announcementBar: {
+      id: 'editorial-stand',
+      content: 'Тестовый стенд. Инструкции требуют проверки на используемой версии МИС. Снимки 26.1 и 25.2 не являются утверждёнными выпусками руководства.',
+      isCloseable: false,
+    },
     colorMode: {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Инфоклиника — Справка (стенд)',
-      logo: {
-        alt: 'Инфоклиника',
-        src: 'img/logo.svg',
-      },
+      title: 'Инфоклиника: справка',
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'egiszSidebar',
+          to: '/trunk/egisz/',
           position: 'left',
           label: 'ЕГИСЗ',
+        },
+        {
+          to: '/trunk/services1/',
+          position: 'left',
+          label: 'Служебные модули',
         },
         {
           to: '/internal/egisz/',

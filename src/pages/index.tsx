@@ -18,8 +18,8 @@ function HomepageHeader() {
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
-          <Link className="button button--secondary button--lg" to="/egisz/">
-            Раздел «ЕГИСЗ»
+          <Link className="button button--secondary button--lg" to="/trunk/egisz/">
+            Открыть руководство
           </Link>
         </div>
       </div>
@@ -31,8 +31,8 @@ export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title="Внедрение и поддержка интеграции с ЕГИСЗ"
+      description="Подключение, настройка и сопровождение обмена МИС «Инфоклиника» с ИЭМК и РЭМД.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

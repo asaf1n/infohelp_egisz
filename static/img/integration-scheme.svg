@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1272" height="360" viewBox="0 0 1272 360" role="img" aria-labelledby="title desc">
+  <title id="title">Схема обмена МИС «Инфоклиника» с ЕГИСЗ</title>
+  <desc id="desc">МИС «Инфоклиника» передаёт данные через портал «Инфоклиника.RU» и ИПС ЕГИСЗ в ИЭМК и РЭМД.</desc>
+  <defs>
+    <style>
+      .box { stroke: #cbd4df; stroke-width: 1.5; }
+      .main { font-family: Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #111111; text-anchor: middle; }
+      .sub { font-family: Arial, sans-serif; font-size: 18px; font-weight: 400; fill: #6e7d8d; text-anchor: middle; }
+      .sub-white { font-family: Arial, sans-serif; font-size: 18px; font-weight: 400; fill: #ffffff; text-anchor: middle; }
+      .route { font-family: Arial, sans-serif; font-size: 18px; font-weight: 700; fill: #111111; text-anchor: middle; }
+      .orange-main { font-family: Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="1272" height="360" fill="#ffffff"/>
+
+  <rect class="box" x="20" y="130" width="250" height="100" rx="6" fill="#f8fafc"/>
+  <text class="main" x="145" y="172">МИС «Инфоклиника»</text>
+  <text class="sub" x="145" y="204">База данных МО</text>
+
+  <rect x="400" y="130" width="250" height="100" rx="6" fill="#050505"/>
+  <text class="orange-main" x="525" y="172">Инфоклиника.RU</text>
+  <text class="sub-white" x="525" y="204">Иная ИС в ЕГИСЗ</text>
+
+  <rect class="box" x="782" y="130" width="198" height="100" rx="6" fill="#f8fafc"/>
+  <text class="main" x="881" y="188">ИПС ЕГИСЗ</text>
+
+  <rect x="1077" y="40" width="184" height="100" rx="6" fill="#e66745"/>
+  <text class="orange-main" x="1169" y="99">ИЭМК</text>
+
+  <rect x="1077" y="220" width="184" height="100" rx="6" fill="#e66745"/>
+  <text class="orange-main" x="1169" y="279">РЭМД</text>
+
+  <line x1="270" y1="160" x2="384" y2="160" stroke="#111111" stroke-width="2"/>
+  <polygon points="384,152 400,160 384,168" fill="#111111"/>
+  <text class="route" x="335" y="143">ГОСТ-VPN</text>
+  <line x1="400" y1="200" x2="286" y2="200" stroke="#aebccc" stroke-width="2" stroke-dasharray="8 6"/>
+  <polygon points="286,192 270,200 286,208" fill="#aebccc"/>
+
+  <line x1="650" y1="160" x2="766" y2="160" stroke="#111111" stroke-width="2"/>
+  <polygon points="766,152 782,160 766,168" fill="#111111"/>
+  <text class="route" x="716" y="143">ЗСПД</text>
+  <line x1="782" y1="200" x2="666" y2="200" stroke="#aebccc" stroke-width="2" stroke-dasharray="8 6"/>
+  <polygon points="666,192 650,200 666,208" fill="#aebccc"/>
+
+  <path d="M980 160 H1030 V90 H1061" fill="none" stroke="#111111" stroke-width="2" stroke-linejoin="miter"/>
+  <polygon points="1061,82 1077,90 1061,98" fill="#111111"/>
+  <path d="M980 200 H1030 V270 H1061" fill="none" stroke="#111111" stroke-width="2" stroke-linejoin="miter"/>
+  <polygon points="1061,262 1077,270 1061,278" fill="#111111"/>
+</svg>

@@ -1,0 +1,92 @@
+{
+  "generators_before": [
+    {
+      "profile_gen": 10000395,
+      "links_gen": 10011225,
+      "repl_profile_gen": 395,
+      "repl_links_gen": 11225
+    }
+  ],
+  "cases": [
+    {
+      "semd_code": "227",
+      "strict": {
+        "status": "INCOMPLETE",
+        "profile_id": null,
+        "mapped_count": 64,
+        "missing_count": 8,
+        "created_profile": 0,
+        "updated_profile": 0,
+        "inserted_links": 0,
+        "extra_links": null
+      },
+      "first": {
+        "status": "PARTIAL_VERIFICATION",
+        "profile_id": 10000295,
+        "mapped_count": 64,
+        "missing_count": 8,
+        "created_profile": 0,
+        "updated_profile": 1,
+        "inserted_links": 0,
+        "extra_links": 0
+      },
+      "second": {
+        "status": "PARTIAL_VERIFICATION",
+        "profile_id": 10000295,
+        "mapped_count": 64,
+        "missing_count": 8,
+        "created_profile": 0,
+        "updated_profile": 0,
+        "inserted_links": 0,
+        "extra_links": 0
+      },
+      "rows_identical_on_repeat": true,
+      "generators_unchanged_on_repeat": true
+    },
+    {
+      "semd_code": "228",
+      "strict": {
+        "status": "INCOMPLETE",
+        "profile_id": null,
+        "mapped_count": 63,
+        "missing_count": 10,
+        "created_profile": 0,
+        "updated_profile": 0,
+        "inserted_links": 0,
+        "extra_links": null
+      },
+      "first": {
+        "status": "PARTIAL_VERIFICATION",
+        "profile_id": 10000296,
+        "mapped_count": 63,
+        "missing_count": 10,
+        "created_profile": 0,
+        "updated_profile": 1,
+        "inserted_links": 0,
+        "extra_links": 0
+      },
+      "second": {
+        "status": "PARTIAL_VERIFICATION",
+        "profile_id": 10000296,
+        "mapped_count": 63,
+        "missing_count": 10,
+        "created_profile": 0,
+        "updated_profile": 0,
+        "inserted_links": 0,
+        "extra_links": 0
+      },
+      "rows_identical_on_repeat": true,
+      "generators_unchanged_on_repeat": true
+    }
+  ],
+  "generators_after_tests": [
+    {
+      "profile_gen": 10000395,
+      "links_gen": 10011225,
+      "repl_profile_gen": 395,
+      "repl_links_gen": 11225
+    }
+  ],
+  "profile_rows_restored": true,
+  "generator_note": "Firebird generators advance outside transaction rollback; they were not reset."
+}

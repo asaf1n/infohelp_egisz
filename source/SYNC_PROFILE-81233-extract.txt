@@ -1,0 +1,504 @@
+#81233 (Мастер синхронизации. Профили синхронизации (добавление возможности настраивать наборы загружаемых справочников))
+– SDS
+Search:
+logged in as safin.a
+Logout
+Preferences
+Help/Guide
+About Trac
+Last unread
+Wiki
+Versions
+Timeline
+Browse Source
+New Ticket
+Search
+Context Navigation
+←  Previous Ticket
+Back to Query
+Next Ticket  →
+Watch This
+Modify  ↓
+Opened  on Apr 10, 2024 at 11:45:15 AM
+Last modified  on Jul 22, 2026 at 4:18:47 PM
+#81233
+Проверено
+Доработка
+( Выполнено )
+Мастер синхронизации. Профили синхронизации (добавление возможности настраивать наборы загружаемых справочников)
+Reported by:
+gerasimova.e
+Owned by:
+rybalko.a
+Priority:
+Высокий
+Component:
+Синхронизация данных
+Version:
+INF-24.2
+Keywords:
+Cc:
+trofimov.n ,  rybalko.a ,  gurin.p ,  safin.a ,  makarova.d
+Клиент:
+Тула 2024 Плановые доработки
+Тип клиента:
+SLA
+Плановое время:
+06.00
+Фактическое время:
+04.25
+Плановая дата:
+on Sep 23, 2024
+Внешний номер:
+S:412486
+Категория:
+Интерфейсная
+Статус ошибки:
+Важность:
+Уточнение
+Статус документации:
+Документировано
+Аналитик:
+chechulin.a
+Техписатель:
+Время аналитика:
+04.50
+Эксперт:
+Развитие:
+Реализация:
+По реализации. В  SyncManager.exe  в главном меню появилась новая кнопка "Справочники - Настройка профилей менеджера загрузок". Сам справочник сделан по общим канонам с удобными "плюшками" типа "Раскрыть всё", сплиттерами и пр. В дереве профилей можно мышкой перетаскивать профили, чтобы сформировать древовидную структуру.
+Переменная для  SyncServer  названа  syncprofiles , можно задать в конфиге или в строке запуска. Можно задать и ид, и текстовые идентификаторы одновременно. Поиск идет рекурсивно по всем профилям-ХП-дет.таблицам с учетом уникальности справочников, т.е. справочники не будут дублироваться в финальном списке.
+Обновления:
+51595, 51596, 51597, 51598, 51599, 51600, 51601
+Описание метаданных:
+Документировано
+Комментарий к версии:
+Комментарий для бизнеса:
+Контроль совместимости:
+Не требуется
+Автоматическое тестирование:
+Не требуется
+Зависимости:
+#81261
+Контролер:
+Статус контроля:
+Время перехода на статус:
+21.07.2026 15:48:29
+Description
+(last modified by  chechulin.a )
+¶
+Описание  ¶
+Справочник профилей для модуля sync manager по аналогии с генератором отчётов.
+Возможность указать список идентификаторов профилей конфигурационном файле службы
+автоматически грузить справочники в т.ч. на основе профиля
+Настройка справочника профилей:
+возможность ручного включения справочников в профиль
+возможность динамического получения состава справочников вызовом ХП
+Создание ХП, которая:
+использует логику из  #78232  для получения СЭМД
+наследует справочники НСИ, использующие этот СЭМД
+возвращает массив ID справочников из таблиц  NSI
+Создание профиля, ссылающегося на эту процедуру, распространение его в обновлениях
+todo:
+возможность указать интеграционный профиль для профиля загрузки
+интерфейс формы настройки
+Описание
+Реализация
+1. Создать таблицы профилей менеджера синхронизации SYNC_PROFILE, …
+2. Реализовать ХП для определения состава справочников профиля
+3. Реализовать форму настройки профилей
+4. Добавить поддержку параметра для сервиса Sync
+Реализация  ¶
+1. Создать таблицы профилей менеджера синхронизации SYNC_PROFILE, SYNC_PROFILE_LINKS  ¶
+SYNC_PROFILE
+Наименование    Тип данных    Комментарий
+SYNCPROFID  TBIGIDENT  Идентификатор таблицы профилей менеджера загрузок SYNC_PROFILE.SYNCPROFID
+PARENT_SYNCPROFID  TBIGCODE  Идентификатор родительской записи таблицы профилей менеджера загрузок SYNC_PROFILE.SYNCPROFID
+SYNCPROFNAME  TTEXT200  Наименование профиля менеджера загрузок
+SYNCPROF_SP  TTEXT100  Хранимая процедура для получения перечня идентификаторов справочников (SYNCREFID)
+SYNCPROFIDENT  TTEXT64  Текстовый идентификатор профиля менеджера загрузок
+COMMENT  TTEXT1024  Комментарий
+FDATE  TDATEONLY  Дата отключения профиля
+FILIAL  TICODE  Филиал создания записи FILIAL.FILID
+UID  TBIGCODE  Пользователь, изменивший запись DOCTOR.DCODE
+execute   procedure  meta_create_table (  'SYNC_PROFILE'  ,   '
+create table SYNC_PROFILE (
+SYNCPROFID TBIGIDENT,
+PARENT_SYNCPROFID TBIGCODE,
+SYNCPROFNAME TTEXT200,
+SYNCPROF_SP TTEXT100,
+SYNCPROFIDENT TTEXT64,
+COMMENT TTEXT1024,
+FDATE TDATEONLY,
+FILIAL TICODE,
+UID TBIGCODE,
+MODIFYDATE TDATE,
+constraint PK_SYNC_PROFILE primary key (SYNCPROFID)
+);'  );
+SYNC_PROFILE_LINKS
+Наименование    Тип данных    Комментарий
+SYNCPROFLINKID  TBIGIDENT  Идентификатор записи таблицы состава профиля менеджера загрузки SYNC_PROFILE_LINKS.SYNCPROFLINKID
+SYNCPROFID  TBIGIDENT  Идентификатор таблицы профилей менеджера загрузок SYNC_PROFILE.SYNCPROFID
+SYNCREFID  TBIGIDENT  Идентификатор справочника синхронизации SYNC_REFERENCE.SYNCREFID
+FILIAL  TICODE  Филиал создания записи FILIAL.FILID
+UID  TBIGCODE  Пользователь, изменивший запись DOCTOR.DCODE
+MODIFYDATE  TDATE  Дата последнего изменения записи
+execute   procedure  meta_create_table (  'SYNC_PROFILE_LINKS'  ,   '
+create table SYNC_PROFILE_LINKS (
+SYNCPROFLINKID TBIGIDENT,
+SYNCPROFID TBIGIDENT,
+SYNCREFID TBIGIDENT,
+FILIAL TICODE,
+UID TBIGCODE,
+MODIFYDATE TDATE,
+constraint PK_SYNC_PROFILE_LINKS primary key (SYNCPROFLINKID)
+);'  );
+2. Реализовать ХП для определения состава справочников профиля  ¶
+Хранимая процедура SYNC_PROFILE_GET_DEFAULT
+Входящие параметры
+Наименование    Тип данных    Комментарий
+recid  TBIGCODE = null  Идентификатор записи сущности
+rectype  TICODE = null  Идентификатор сущности RECTYPES.RECTYPE
+Исходящие параметры
+Наименование    Тип данных    Комментарий
+ERROR_CODE  TICODE  Код ошибки
+ERROR_TEXT  TTEXT1024  Текст ошибки
+CHECK_CODE  TICODE  Код контроля ввода данных
+CHECK_TEXT  TTEXT1024  Текст сообщения контроля ввода данных
+SYNCREFID  TBIGCODE  Идентификатор справочника  SYNC_REFERENCE.SYNCREFID
+Алгоритм:
+2.1. При вызове SYNC_PROFILE_GET_DEFAULT с  recid = null, rectype = null , вернуть справочники, используемые в протоколах за последние 30 дней
+Открыть
+with  protocol_list  as
+(
+select   distinct  protocolid
+from  treatplacesigndet tsd
+left   join  treatplacesign ts  on  ts . tpsignid  =  tsd . tpsignid
+left   join  dicinfo d  on  d . dicid  =  tsd . recid  and  refid  =   -  508   and  d . rekvint1  in   (  2  ,  5  ,  7  ,  14  )
+where  tsd . rectype  =   97
+and  tsd . modifydate  >   current_date   -   30
+and  ts . tpsignid  >   0   and  d . dicid  >   0
+)
+,  placeid_list  as
+(
+select   distinct  placeid
+from  protocol_list p
+left   join  treatplace tp  on  tp . protocolid  =  p . protocolid
+)
+,  refid_list  as
+(
+select   distinct  gp . reftodict refid
+from  placeid_list p
+left   join  workplacedoclinks wpl  on  p . placeid  =  wpl . placeid
+left   join  groupsdictlinks gdl  on  wpl . groupid  =  gdl . groupid
+left   join  groupsparams gp  on  gdl . codeparams  =  gp . codeparams
+where  reftodict  is   not   null
+)
+select   distinct  syncrefid
+from  refid_list rl
+left   join  refdic r  on  rl . refid  =  r . refid
+left   join  sync_reference sr  on   (( r . refid  =  sr . dicrefid )   or   ( r . refcode  =  sr . refcode ))
+where  r . refid  >   0   and  sr . syncrefid  >   0
+2.2. При вызове SYNC_PROFILE_GET_DEFAULT с  recid > 0, rectype = 97 , определять перечень справочников по указанному интеграционному протоколу
+Открыть
+with  placeid_list  as
+(
+select   distinct  wd . placeid
+from  workplacedocdet wpd
+left   join  workplacedoc wd  on  wpd . placeid  =  wd . placeid
+where  wpd . rectype  =   97   and   ( wpd . recid  =   cast  (: recid  as  tbigcode )   or   cast  (: recid  as  tbigcode )   is   null  )
+)
+,  refid_list  as
+(
+select   distinct  gp . reftodict refid
+from  placeid_list p
+left   join  workplacedoclinks wpl  on  p . placeid  =  wpl . placeid
+left   join  groupsdictlinks gdl  on  wpl . groupid  =  gdl . groupid
+left   join  groupsparams gp  on  gdl . codeparams  =  gp . codeparams
+where  reftodict  is   not   null
+)
+select   distinct  syncrefid
+from  refid_list rl
+left   join  refdic r  on  rl . refid  =  r . refid
+left   join  sync_reference sr  on   (( r . refid  =  sr . dicrefid )   or   ( r . refcode  =  sr . refcode ))
+where  r . refid  >   0   and  sr . syncrefid  >   0
+3. Реализовать форму настройки профилей  ¶
+Профили синхронизации справочников
+3.1. Кнопки
+пп    Наименование    Функция    Комментарий
+1  Обновить  Обновить содержимое формы
+2  Добавить  Добавить запись в грид профилей
+3  Изменить  Изменить наименование выбранного профиля
+4  Удалить  Удалить запись из грида профилей
+3.2. Фильтры
+пп    Наименование    Тип поля    Поле БД    Комментарий
+1  Наименование  строка   SYNC_PROFILE.SYNCPROFNAME
+3.3. Панель профилей (дерево, на основе SYNC_PROFILE)
+пп    Наименование    Тип поля    Поле БД    Комментарий
+1  Наименование  строка   SYNC_PROFILE.SYNCPROFNAME   Дерево строить по SYNC_PROFILE.SYNCPROFID, SYNC_PROFILE.PARENT_SYNCPROFID
+3.4. Панель настройки профиля
+пп    Наименование    Тип поля    Поле БД    Комментарий
+1  Наименование  строка   SYNC_PROFILE.SYNCPROFNAME
+2  Код  строка   SYNC_PROFILE.SYNCPROFIDENT
+3  Хранимая процедура  строка   SYNC_PROFILE.SYNCPROF_SP
+4  Код  длинный текст (по  ... )   SYNC_PROFILE.COMMENT
+3.5. Панель привязки справочников (на основе SYNC_PROFILE_LINKS)
+3.5.1. Кнопки: Добавить, Удалить
+3.5.2. Грид (отображать записи по  SYNC_PROFILE_LINKS.SYNCPROFID = SYNC_PROFILE.SYNCPROFID )
+пп    Наименование    Тип поля    Поле БД    Комментарий
+1  Наименование  строка   SYNC_REFERENCE.REFNAME
+2  Код  строка   SYNC_REFERENCE.REFCODE
+4. Добавить поддержку параметра для сервиса Sync  ¶
+2.1. Добавить поддержку параметра  syncrefprofile_list . При запуске процесса загрузки/обновления справочников:
+искать профили, как по числовым идентификаторам ( SYNC_PROFILE.SYNCPROFID ), так и по кодам ( SYNC_PROFILE.SYNCPROFIDENT )
+производить загрузку/обновление справочников как по самим указанным профилям, так и по дочерним (по  SYNC_PROFILE.PARENT_SYNCPROFID ). Обновляемые справочники определять по:
+результату (набору SYNCREFID) вызова хранимой процедуры ( SYNC_PROFILE.SYNCPROF_SP )
+вручную добавленным справочникам (SYNC_PROFILE_LINKS)
+Subtickets   ( add )
+#88418  Менеджер Синхронизаций > Профиль загрузки справочников: переделать отображение процедуры в интерфейсе  Доработка  Заявка   nazarova.n
+#88419  Менеджер синхронизаций: добавить возможность загрузки спрофиля через интерфейс  Доработка  Заявка   nazarova.n
+#96368  SyncManager. Добавить фильтр по справочникам внутри грида в профилях  Доработка  Тестирование   rybalko.a
+#96378  SyncManager. Не загружает справочники  Глюк  Проверено   rybalko.a
+#96387  SyncManager. Не синхронизирует справочники из-за плохой работы сервиса  Доработка  Тестирование   rybalko.a
+Attachments  (0)
+Oldest first
+Newest first
+Threaded
+Comments only
+Change History  (33)
+comment:1
+Changed  on Apr 11, 2024 at 11:14:20 AM  by  dmitrieva.d
+Зависимости
+set to  81261
+comment:2
+Changed  on Apr 15, 2024 at 9:43:40 PM  by  gurin.p
+Status
+changed from  Заявка  to  Уточнение
+Аналитик
+set to  gurin.p
+речь о справочниках в клиниках или для базы Reference_custom? Опиши весь процесс, пожалуйста
+comment:3
+Changed  on Apr 16, 2024 at 9:57:48 AM  by  gerasimova.e
+Status
+changed from  Уточнение  to  Детализация
+О справочниках, которые загружаются с помощью менеджера синхронизации.
+Вот здесь описывали процесс , как это сейчас работает:
+Нужно оставить так же, только добавив возможность забирать перечень справочников извне, а не прописывать весь список руками.
+Last edited  on Apr 23, 2024 at 12:16:29 AM
+by  gurin.p
+( previous )
+( diff )
+comment:4
+Changed  on Apr 23, 2024 at 12:20:26 AM  by  gurin.p
+Status
+changed from  Детализация  to  Уточнение
+Лиз, здесь инструкция в три строчки в стиле  "Ничего не трогай, собачки сами всё сделают"
+Нельзя проектировать решения, если нет понимания процесса. Что за справочники, почему именно эти, почему и где их грузят. Потрать полчаса на то, чтобы описать весь сценарий, пожалуйста
+comment:5
+Changed  on Apr 23, 2024 at 8:52:26 AM  by  gerasimova.e
+Status
+changed from  Уточнение  to  Детализация
+Я предоставила ссылку на справочники, которые используются в СЭМД.
+Вы курировали этот процесс, когда он запускался и стоял вопрос централизованной загрузки справочников. Решение было - грузить через syncmeneger. Процесс за почти уже два года не изменился:
+Клиника покупает СЭМД, для настройки СЭМДа надо загрузить справочники из перечня выше (приведен в теле задачи).
+Менеджер настраивает загрузку справочников: единоразово прощелкивает в менеджере синхронизации либо настраивает задачу, чтобы справочники постоянно актуализировались.
+Потому что на стороне ФНСИ ряд справочников обновляется постоянно, и в случае расхождения значений между БД, из которой передаем, и ФНСИ, СЭМД может получить ошибку.
+Дополнения к описанию процесса:
+Состав справочника определяется инструкцией к сэмду, которую заказала клиника.
+То есть менеджер берет инструкцию для нужного сэмда, открывает ее, видит список из н-справочников.
+Начинает это грузить.
+Делает, чаще всего, это единоразово.
+Но проблема единоразовой загрузки в том, что чудесным утром фнси решает, что надо в одном справочнике поменять формулировки. И было у нас "возбудитель инфекции не обнаружен", а на следующий день стало "не обнаружено".
+И все, сэмд падает в ошибку, клиника звонит менеджеру, тот обновляет справочник, с горем пополам найдя какой требуется.
+Либо он поступает умно и делает в sync server задачу и справочник обновляется автоматически.
+Но вот клиника говорит, хочу сэмд такой то. И ему надо руками прописывать все эти оиды новых справочников через запятую, а их может быть много. 30-40 штук, для больших сэмдов не предел.
+И вот так каждую итерацию надо добавлять руками оиды в загрузчик
+Last edited  on Apr 23, 2024 at 9:11:14 PM
+by  gurin.p
+( previous )
+( diff )
+comment:6
+Changed  on Apr 23, 2024 at 9:19:56 PM  by  gurin.p
+Keywords
+аналитику  added
+Время аналитика
+set to  01.00
+Клиент
+changed from  Тула 2024 Плановые доработки  to  Отдел развития (SDS). Внутренние задачи
+состав работ:
+Справочник профилей для модуля sync manager по аналогии с генератором отчётов.
+Возможность указать список идентификаторов профилей конфигурационном файле службы
+автоматически грузить справочники в т.ч. на основе профиля
+Настройка справочника профилей:
+возможность ручного включения справочников в профиль
+возможность динамического получения состава справочников вызовом ХП
+Создание ХП, которая:
+использует логику из  #78232  для получения СЭМД
+наследует справочники НСИ, использующие этот СЭМД
+возвращает массив ID справочников из таблиц  NSI
+Создание профиля, ссылающегося на эту процедуру, распространение его в обновлениях
+Оценка трудозатрат (часы)
+№         Изменение         Оценка трудозатрат
+Аналитик       Разработчик       Тестировщик       Техписатель        Итого
+1    Справочник профилей для модуля sync manager по аналогии с генератором отчётов.      4       10       4       2       20
+2    Настройка справочника профилей      4       4       3       2       13
+3    Создание ХП получения справочников СЭМД      3       6       3       1       13
+4    Создание и распространение стандартного профиля      3       6       2       2       13
+Итого:       59
+Last edited  on May 7, 2024 at 11:45:10 PM
+by  gurin.p
+( previous )
+( diff )
+comment:7
+Changed  on May 7, 2024 at 11:46:02 PM  by  gurin.p
+Status
+changed from  Детализация  to  Уточнение
+Клиент
+changed from  Отдел развития (SDS). Внутренние задачи  to  Тула 2024 Плановые доработки
+comment:6
+comment:8
+Changed  on Jul 4, 2024 at 3:57:28 PM  by  gerasimova.e
+Status
+changed from  Уточнение  to  Принято
+Version
+set to  INF-23.1
+Плановая дата
+set to  Jul 31, 2024
+Плановое время
+set to  00.50
+Часы согласованы, возьмите задачу в работу, пожалуйста.
+comment:9
+Changed  on Jul 5, 2024 at 7:54:00 AM  by  rybalko.a
+Status
+changed from  Принято  to  Детализация
+Откуда забирать?) Где реализация?
+comment:10
+Changed  on Jul 26, 2024 at 2:09:23 PM  by  dmitrieva.d
+Прошу взять задачу в работу
+comment:11
+Changed  on Aug 20, 2024 at 11:43:11 AM  by  dmitrieva.d
+Возьмите задачу в работу!
+comment:12
+Changed  on Aug 21, 2024 at 8:40:17 PM  by  chechulin.a
+здесь было старое описание
+Last edited  on Sep 16, 2024 at 6:26:38 PM
+by  chechulin.a
+( previous )
+( diff )
+comment:13
+Changed  on Aug 27, 2024 at 11:05:37 AM  by  dmitrieva.d
+Прошу взять задачу в работу
+comment:14
+Changed  on Sep 10, 2024 at 12:10:02 PM  by  safin.a
+Cc
+gurin.   safin.a  added;  gurin.p  removed
+comment:15
+Changed  on Sep 10, 2024 at 12:10:47 PM  by  safin.a
+Cc
+gurin.p  added;  gurin.  removed
+comment:16
+Changed  on Sep 11, 2024 at 11:38:07 AM  by  trofimov.n
+По возможности, ещё надо добавить возможность задержки обновления справочников.
+Например раз в 3 дня (параметризовано).
+Иногда бывает коллизия что справочник выпустили но ещё не принимают (2-3 часа лага у ЕГИСЗ есть)
+comment:17
+Changed  on Sep 16, 2024 at 6:26:09 PM  by  chechulin.a
+Description
+modified ( diff )
+Keywords
+аналитику  removed
+Status
+changed from  Детализация  to  Принято
+Summary
+changed from  Добавить возможность загрузки справочников в автоматическом режиме, обновляя перечень oid на загрузку автоматически  to  Мастер синхронизации. Профили синхронизации (добавление возможности настраивать наборы загружаемых справочников)
+Version
+changed from  INF-23.1  to  INF-24.2
+Автоматическое тестирование
+set to  Не требуется
+Аналитик
+changed from  gurin.p  to  chechulin.a
+Время аналитика
+changed from  01.00  to  04.50
+Категория
+set to  Интерфейсная
+Контроль совместимости
+set to  Не требуется
+Описание метаданных
+set to  Требуется
+Плановая дата
+changed from  Jul 31, 2024  to  Sep 23, 2024
+Плановое время
+changed from  00.50  to  06.00
+Статус документации
+changed from  Уточнение  to  Требуется
+comment:18
+Changed  on Sep 17, 2024 at 12:31:06 PM  by  rybalko.a
+Обновления
+set to  51595, 51596, 51597, 51598, 51599, 51600
+comment:19
+Changed  on Sep 17, 2024 at 12:53:09 PM  by  rybalko.a
+Обновления
+changed from  51595, 51596, 51597, 51598, 51599, 51600  to  51595, 51596, 51597, 51598, 51599, 51600, 51601
+Фактическое время
+set to  02.75
+Готово всё, кроме п.4
+comment:20
+Changed  on Sep 17, 2024 at 3:47:31 PM  by  rybalko.a
+Status
+changed from  Принято  to  Тестирование
+Реализация
+modified ( diff )
+Фактическое время
+changed from  02.75  to  04.00
+comment:21
+Changed  on Sep 17, 2024 at 3:47:54 PM  by  rybalko.a
+[141135]  trunk/Services/Sync
+comment:22
+Changed  on Sep 17, 2024 at 3:48:30 PM  by  rybalko.a
+Вроде все работает, но приколы возможны...
+comment:23
+Changed  on Sep 17, 2024 at 3:49:35 PM  by  rybalko.a
+[141136]  trunk/App/Bin
+comment:24
+Changed  on Sep 17, 2024 at 3:49:44 PM  by  rybalko.a
+[141137]  trunk/Services/Sync
+comment:25
+Changed  on Sep 18, 2024 at 7:56:07 AM  by  rybalko.a
+Описание метаданных
+changed from  Требуется  to  Документировано
+Фактическое время
+changed from  04.00  to  04.25
+Документация таблиц и ХП
+comment:26
+Changed  on Oct 30, 2024 at 8:32:00 PM  by  egorov.a
+[142642]  tags/trunk-stable
+comment:27
+Changed  on May 5, 2025 at 4:44:41 PM  by  makarova.d
+Добавлена зависимая карточка  #88418
+comment:28
+Changed  on May 5, 2025 at 4:58:20 PM  by  makarova.d
+Добавлена зависимая карточка  #88419
+comment:29
+Changed  on May 5, 2025 at 6:24:25 PM  by  makarova.d
+Cc
+makarova.d  added
+Статус документации
+changed from  Требуется  to  Документировано
+Модуль "Менеджер загрузок".
+Модуль "Менеджер загрузок" > Настройка профилей менеджера загрузок.
+comment:30
+Changed  on Jul 21, 2026 at 3:48:29 PM  by  sapizhko.a
+Resolution
+set to  Выполнено
+Status
+changed from  Тестирование  to  Проверено
+Теперь еще и работает)
+comment:31
+Changed  on Jul 21, 2026 at 3:51:28 PM  by  sapizhko.a
+Добавлена зависимая карточка  #96368
+comment:32
+Changed  on Jul 22, 2026 at 12:27:50 PM  by  sapizhko.a
+Добавлена зависимая карточка  #96378
+comment:33
+Changed  on Jul 22, 2026 at 4:18:47 PM  by  sapizhko.a
+Добавлена зависимая карточка  #96387

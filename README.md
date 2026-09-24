@@ -1,41 +1,59 @@
-# Website
+# Руководство по интеграции МИС «Инфоклиника» с ЕГИСЗ
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+Локальный стенд подготовки документации по ИЭМК и РЭМД на Docusaurus 3.9.2. Устройство и правила федеральных подсистем проверяются по источникам Минздрава; настройки МИС — по материалам СДС и результатам испытаний. Карта источников и противоречий находится в [source/ONLINE_SOURCES.md](source/ONLINE_SOURCES.md).
 
-## Installation
+## Запуск в Docker
 
-```bash
-yarn
+Из каталога проекта:
+
+```powershell
+docker compose up --build dev
 ```
 
-## Local Development
+Редактируемый стенд: http://localhost:3006/. Изменения в файлах автоматически обновляют страницы. Команда работает в переднем плане; для обычного постоянного запуска можно добавить `-d`.
 
-```bash
-yarn start
+После массового добавления, удаления или переноса страниц и изменения меню перезапустите dev-сервис: `docker compose restart dev`. После перезапуска дождитесь `Compiled successfully` в `docker compose logs --tail 30 dev` и проверьте страницу на порту 3006. Проверки битых ссылок должны оставаться включёнными.
+
+Поиск и итоговую статическую сборку проверяют командой `npm run build`. Для предварительной проверки руководства достаточно одного dev-стенда на порту 3006.
+
+Порт доступен только с локального компьютера. Раздел `/internal` разделяет материалы по назначению, но не обеспечивает авторизацию. Сборка содержит внутренние материалы и общий поисковый индекс; её нельзя публиковать как публичную справку.
+
+## Проверки
+
+```powershell
+docker compose exec -T dev npm run typecheck
+npm run build
+npm run build
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+Сборка проверяет внутренние ссылки и якоря. Повторную сборку выполняют при изменении конфигурации. Проверку страниц и меню проводят в браузере на порту 3006.
 
-## Build
+## Редактирование
 
-```bash
-yarn build
-```
+- `docs/egisz/` — материалы тестового стенда, маршрут `/trunk/egisz/`.
+- `docs/services1/` — система обновлений и репликации, маршрут `/trunk/services1/`.
+- `docs/sync_manager/` — загрузка и синхронизация справочников, маршрут `/trunk/sync_manager/`.
+- `internal/egisz/` — внутренние материалы ЛТП.
+- `versioned_docs/version-26.1/` — прежний снимок стенда, маршрут `/egisz/`.
+- `versioned_docs/version-25.2/` — макет переключения версий.
+- `source/` — карта источников, аудит и методические правила.
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+Стенд не является опубликованным выпуском документации. Снимки 26.1 и 25.2 также не являются утверждёнными выпусками. Материалы проверяются на тестовом контуре, включая тестовые базы Firebird и PostgreSQL; готовность процедур для промышленной МИС требует отдельной проверки.
 
-## Deployment
+[Методические правила](source/DOCUMENTATION_STANDARD.md) · [Аудит стенда](source/AUDIT-2026-09-12.md) · [Первичный манифест](source/MANIFEST.md).
 
-Using SSH:
+[План дальнейшей работы и необходимые материалы](source/WORK_PLAN-2026-09-12.md) · [Карта переноса служебных модулей](source/SERVICE_MODULES-2026-09-12.md).
 
-```bash
-USE_SSH=true yarn deploy
-```
+[Краткий план в Textile для вики](source/WORK_PLAN-2026-09-12.textile).
 
-Not using SSH:
+[Анализ локальной поставки SyncManager и SyncServer, снимков и переписки](source/SYNC_MANAGER-2026-09-12.md).
 
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
-```
+[Редакторская проверка текста и перенесённые сведения об источниках](source/EDITORIAL_REVIEW-2026-09-12.md).
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+[Сверка ИЭМК, РЭМД и сведений о случае по материалам Минздрава](source/EGISZ_REGISTRIES-2026-09-12.md).
+
+[Объединение разделов «Об интеграции»/«Подготовка» и «Тестирование»/«Диагностика»](source/STRUCTURE_MERGE-2026-09-12.md).
+
+[Правовая основа подключения частных МО к ЕГИСЗ](source/PRIVATE_MO_NORMATIVE-2026-09-12.md).
+
+[Обновление нормативной базы и разбор документов Минздрава](source/NORMATIVE_UPDATE-2026-09-12.md) · [продолжение: подпись, случаи заболевания, несколько юрлиц](source/NORMATIVE_UPDATE-2026-09-13.md).
