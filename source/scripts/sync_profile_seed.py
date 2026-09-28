@@ -137,7 +137,8 @@ def literal(value: str) -> str:
 
 
 def seed_sql(report: dict[str, Any], code: str, uid: int | None, filial: int | None,
-             *, partial: bool, verification: bool = False, fail_on_conflict: bool = False) -> str:
+             *, partial: bool, verification: bool = False, fail_on_conflict: bool = False,
+             current_database: bool = False) -> str:
     if not re.fullmatch(r"[0-9]+", code):
         raise ValueError("The selected semd_code must be numeric")
     guide = next(item for item in report["guides"] if item["semd_code"] == code)
@@ -151,6 +152,16 @@ def seed_sql(report: dict[str, Any], code: str, uid: int | None, filial: int | N
         raise ValueError("The selected guide is not a CDA document type")
     actor_uid = str(uid) if uid is not None else "CAST(RDB$GET_CONTEXT('USER_SESSION', 'SYNC_PROFILE_UID') AS BIGINT)"
     actor_filial = str(filial) if filial is not None else "CAST(RDB$GET_CONTEXT('USER_SESSION', 'SYNC_PROFILE_FILIAL') AS INTEGER)"
+    actor_columns = "" if current_database else ", filial, uid"
+    actor_values = "" if current_database else f", {actor_filial}, {actor_uid}"
+    actor_update = "" if current_database else f"uid = {actor_uid}, "
+    actor_check = "" if current_database else f"""
+    IF (NOT EXISTS(SELECT 1 FROM doctor WHERE dcode = {actor_uid}) OR
+        NOT EXISTS(SELECT 1 FROM filials WHERE filid = {actor_filial})) THEN
+    BEGIN
+        status = 'INVALID_ACTOR'; SUSPEND; EXIT;
+    END
+"""
     end_date = f"DATE {literal(str(guide['semd_end_date']))}" if guide["semd_end_date"] else "NULL"
     name = profile_name(code, guide["semd_name"])
     legacy_name = f"СЭМД {code}"
@@ -199,11 +210,7 @@ BEGIN
     BEGIN
         status = 'NO_AVAILABLE_REFERENCES'; SUSPEND; EXIT;
     END
-    IF (NOT EXISTS(SELECT 1 FROM doctor WHERE dcode = {actor_uid}) OR
-        NOT EXISTS(SELECT 1 FROM filials WHERE filid = {actor_filial})) THEN
-    BEGIN
-        status = 'INVALID_ACTOR'; SUSPEND; EXIT;
-    END
+    {actor_check}
     SELECT COUNT(*), MIN(syncprofid) FROM sync_profile
     WHERE syncprofident = {literal(code)} OR
         (NULLIF(TRIM(syncprofident), '') IS NULL
@@ -234,9 +241,9 @@ BEGIN
         profile_id = GEN_ID(sync_profile_gen, 1);
         INSERT INTO sync_profile
             (syncprofid, parent_syncprofid, syncprofname, syncprofident, comment,
-             fdate, filial, uid, modifydate)
+             fdate{actor_columns}, modifydate)
         VALUES (:profile_id, 0, {literal(name)}, {literal(code)}, :profile_comment,
-                {end_date}, {actor_filial}, {actor_uid}, CURRENT_TIMESTAMP);
+                {end_date}{actor_values}, CURRENT_TIMESTAMP);
         created_profile = 1;
     END
     ELSE IF (EXISTS(SELECT 1 FROM sync_profile WHERE syncprofid = :profile_id
@@ -247,7 +254,7 @@ BEGIN
     BEGIN
         UPDATE sync_profile SET syncprofident = {literal(code)}, syncprofname = {literal(name)},
             comment = :profile_comment,
-            fdate = {end_date}, uid = {actor_uid}, modifydate = CURRENT_TIMESTAMP WHERE syncprofid = :profile_id;
+            fdate = {end_date}, {actor_update}modifydate = CURRENT_TIMESTAMP WHERE syncprofid = :profile_id;
         updated_profile = 1;
     END
     FOR {eligible} INTO :reference_id DO
@@ -256,9 +263,8 @@ BEGIN
                        WHERE syncprofid = :profile_id AND syncrefid = :reference_id)) THEN
         BEGIN
             INSERT INTO sync_profile_links
-                (syncproflinkid, syncprofid, syncrefid, filial, uid, modifydate)
-            VALUES (GEN_ID(sync_profile_links_gen, 1), :profile_id, :reference_id,
-                    {actor_filial}, {actor_uid}, CURRENT_TIMESTAMP);
+                (syncproflinkid, syncprofid, syncrefid{actor_columns}, modifydate)
+            VALUES (GEN_ID(sync_profile_links_gen, 1), :profile_id, :reference_id{actor_values}, CURRENT_TIMESTAMP);
             inserted_links = inserted_links + 1;
         END
     END
@@ -293,26 +299,14 @@ def protected_transaction(connection: Connection) -> TransactionManager:
 
 
 def export_sql(report: dict[str, Any], output: Path) -> Path:
-    statements = [seed_sql(report, code, None, None, partial=True, fail_on_conflict=True)
+    statements = [seed_sql(report, code, None, None, partial=True, fail_on_conflict=True,
+                           current_database=True)
                   for code in catalog_codes(report)]
-    header = """-- Run in a dedicated Firebird connection with UTF8 client charset.
--- Replace only TARGET_UID and TARGET_FILIAL with identifiers from the target MIS.
+    header = """-- Execute in the current Firebird database, using a dedicated UTF8 connection.
+-- No connection switching or external databases. No user or branch parameters.
+-- Keep native defaults and replication triggers; preserve existing UID and FILIAL.
 SET BAIL ON;
 SET AUTODDL OFF;
-SET TERM ^ ;
-EXECUTE BLOCK AS
-DECLARE VARIABLE TARGET_UID BIGINT = 0;
-DECLARE VARIABLE TARGET_FILIAL INTEGER = 0;
-DECLARE VARIABLE context_result INTEGER;
-BEGIN
-    IF (NOT EXISTS(SELECT 1 FROM doctor WHERE dcode = :TARGET_UID) OR
-        NOT EXISTS(SELECT 1 FROM filials WHERE filid = :TARGET_FILIAL) OR
-        TARGET_UID <= 0 OR TARGET_FILIAL <= 0) THEN
-        EXCEPTION ERROR 'Set valid TARGET_UID and TARGET_FILIAL before loading';
-    context_result = RDB$SET_CONTEXT('USER_SESSION', 'SYNC_PROFILE_UID', TARGET_UID);
-    context_result = RDB$SET_CONTEXT('USER_SESSION', 'SYNC_PROFILE_FILIAL', TARGET_FILIAL);
-END^
-SET TERM ; ^
 COMMIT;
 SET TRANSACTION READ WRITE WAIT ISOLATION LEVEL SNAPSHOT
     RESERVING SYNC_PROFILE, SYNC_PROFILE_LINKS FOR PROTECTED WRITE;
