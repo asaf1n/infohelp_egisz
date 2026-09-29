@@ -315,6 +315,24 @@ SET TERM ^ ;
     path = output / "sync_profiles_load.sql"
     path.write_text(header + "\n^\n".join(statements) + "\n^\nCOMMIT^\nSET TERM ; ^\n",
                     encoding="utf-8")
+    export_editor_sql(statements, output)
+    return path
+
+
+def export_editor_sql(statements: list[str], output: Path) -> Path:
+    blocks: list[str] = []
+    for statement in statements:
+        signature, body = statement.split("\nAS\n", 1)
+        fields = signature.removeprefix("EXECUTE BLOCK RETURNS (\n").rstrip().removesuffix(")")
+        declarations = "\n".join(f"DECLARE VARIABLE {field.strip()};" for field in fields.split(","))
+        body = body.replace("    SUSPEND;\n", "")
+        if "SUSPEND" in body:
+            raise ValueError("Editor block must not return a result set")
+        blocks.append("EXECUTE BLOCK AS\n" + declarations + "\n" + body.strip() + ";")
+    path = output / "sync_profiles_firebird.sql"
+    path.write_text("-- Firebird PSQL for the current database. Execute in script mode.\n"
+                    "-- The SQL client owns the transaction; this file does not commit.\n"
+                    + "\n\n".join(blocks) + "\n", encoding="utf-8")
     return path
 
 
