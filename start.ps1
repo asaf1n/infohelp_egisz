@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Запускает локальный стенд документации и управляет его сервисом Docker Compose.
 .EXAMPLE
@@ -11,7 +11,8 @@
 [CmdletBinding()]
 param(
     [ValidateSet('Start', 'Stop', 'Restart', 'Logs', 'Status')]
-    [string]$Action = 'Start'
+    [string]$Action = 'Start',
+    [switch]$NoPause
 )
 
 $ErrorActionPreference = 'Stop'
@@ -31,6 +32,13 @@ try {
         Write-Host 'Стенд запускается: http://localhost:3006/. Дождитесь Compiled successfully в журнале: .\start.ps1 -Action Logs'
     }
 }
+catch {
+    Write-Host "Ошибка: $($_.Exception.Message)" -ForegroundColor Red
+    throw
+}
 finally {
     Pop-Location
+    if (-not $NoPause) {
+        [void](Read-Host 'Нажмите Enter, чтобы закрыть скрипт')
+    }
 }
